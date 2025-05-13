@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to configure or remove /etc/rc.local for Iran or Kharej server
+# Script to configure or remove /etc/rc.local for Iran or Kharej server and apply immediately
 
 # Check if script is run as root
 if [[ $EUID -ne 0 ]]; then
@@ -19,7 +19,7 @@ validate_ipv6() {
     fi
 }
 
-# Function to create /etc/rc.local for Iran Server
+# Function to create and execute /etc/rc.local for Iran Server
 create_rc_local_iran() {
     local iran_ipv6=$1
     local kharej_ipv6=$2
@@ -47,9 +47,16 @@ exit 0
 EOF
     chmod +x /etc/rc.local
     echo "/etc/rc.local created and made executable."
+    echo "Executing /etc/rc.local to apply changes immediately..."
+    if bash /etc/rc.local; then
+        echo "Changes applied successfully."
+    else
+        echo "Error: Failed to execute /etc/rc.local. Check the configuration."
+        exit 1
+    fi
 }
 
-# Function to create /etc/rc.local for Kharej Server
+# Function to create and execute /etc/rc.local for Kharej Server
 create_rc_local_kharej() {
     local kharej_ipv6=$1
     local iran_ipv6=$2
@@ -71,6 +78,13 @@ exit 0
 EOF
     chmod +x /etc/rc.local
     echo "/etc/rc.local created and made executable."
+    echo "Executing /etc/rc.local to apply changes immediately..."
+    if bash /etc/rc.local; then
+        echo "Changes applied successfully."
+    else
+        echo "Error: Failed to execute /etc/rc.local. Check the configuration."
+        exit 1
+    fi
 }
 
 # Function to remove GRE6 tunnel and NAT rules
