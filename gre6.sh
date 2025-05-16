@@ -34,7 +34,7 @@ sysctl -w net.ipv4.conf.all.forwarding=1
 # Configure GRE6 tunnel
 ip tunnel add GRE6 mode ip6gre remote $kharej_ipv6 local $iran_ipv6
 ip addr add 172.16.1.1/30 dev GRE6
-ip link set GRE6 mtu 1456
+ip link set GRE6 mtu 1420
 ip link set GRE6 up
 
 # Configure iptables NAT rules
@@ -71,7 +71,7 @@ sysctl -w net.ipv4.conf.all.forwarding=1
 # Configure GRE6 tunnel
 ip tunnel add GRE6 mode ip6gre local $kharej_ipv6 remote $iran_ipv6
 ip addr add 172.16.1.2/30 dev GRE6
-ip link set GRE6 mtu 1456
+ip link set GRE6 mtu 1420
 ip link set GRE6 up
 
 exit 0
